@@ -23,6 +23,7 @@ __author__ = 'Escribe aquí tu nombre'
 import nreinas
 import random
 import time
+from itertools import combinations
 
 
 class Genetico:
@@ -75,7 +76,7 @@ class Genetico:
         @return un número con la adaptación del individuo
         """
         #return max(0, len(individuo) - costo(individuo))
-        return 1.0 / (1.0 + costo(individuo))
+        #return 1.0 / (1.0 + costo(individuo))
 
     def seleccion(self, poblacion, aptitud):
         """
@@ -203,15 +204,18 @@ class GeneticoPermutaciones2(Genetico):
     Clase con un algoritmo genético adaptado a problemas de permutaciones
 
     """
-    def __init__(self):
+    def __init__(self, prob_muta=0.01):
         """
         Aqui puedes poner algunos de los parámetros que quieras utilizar en tu clase
 
         """
+        self.prob_muta = prob_muta
         self.nombre = 'propuesto por el alumno'
+
         #
         # ------ IMPLEMENTA AQUI TU CÓDIGO ------------------------------------------------------------------------
         #
+
 
     def calcula_aptitud(self, individuo, costo=None):
         """
@@ -224,7 +228,10 @@ class GeneticoPermutaciones2(Genetico):
         #
         # ------ IMPLEMENTA AQUI TU CÓDIGO --------------------------------
         #
-        raise NotImplementedError("¡Este metodo debe ser implementado!")
+
+        return costo(individuo)
+
+        #raise NotImplementedError("¡Este metodo debe ser implementado!")
 
     def seleccion(self, poblacion, aptitud):
         """
@@ -237,7 +244,86 @@ class GeneticoPermutaciones2(Genetico):
         #
         # ------ IMPLEMENTA AQUI TU CÓDIGO ----------------------------------
         #
-        raise NotImplementedError("¡Este metodo debe ser implementado!")
+
+        # EL METODO ES EL DE LA RULETA
+
+        sa = sum(aptitud) #Suma de las aptitudes
+        mf = float(sa)/len(aptitud) #Media de la aptitud
+
+        #Se calcula el valor esperado de cada individuo
+
+        vei = []
+
+        for x in aptitud:
+            vei.append(float(x)/mf)
+
+        #Suma de los valores esperados
+        sve = sum(vei)
+
+        #Hacemos una tupla con el individuo,aptitud y valor esperado
+        ind = zip(poblacion,aptitud,vei)
+
+        #print ind
+
+        #RULETA
+        padres = []
+        suma = 0
+        x = 0
+        r = random.uniform(0, sve)
+
+        #print 'PADRES'
+
+        #print 'numero aleatorio = ' + str(r)
+
+        while x < len(aptitud)/2:
+            for i in ind:
+                temp = i[2]
+                suma += temp
+                #print 'suma = ' + str(suma)
+                if suma > r and len(padres) < len(aptitud)/2:
+                    #print 'hola'
+                    padres.append(i[0])
+                    suma = 0
+                    x += 1
+                    r = random.uniform(0, sve)
+                    #print 'numero aleatorio = ' + str(r)
+                if x == len(aptitud) and len(padres) < len(aptitud)/2:
+                    #print 'HOLAAAAAAAA'
+                    x = 0
+
+        #print padres
+
+        #RULETA
+        madres = []
+        suma = 0
+        x = 0
+        r = random.uniform(0, sve)
+
+        #print 'MADRES'
+        #print 'numero aleatorio = ' + str(r)
+
+        while x < len(aptitud)/2:
+            for i in ind:
+                temp = i[2]
+                suma += temp
+                #print 'suma = ' + str(suma)
+                if suma > r and len(madres) < len(aptitud)/2:
+                    #print 'hola'
+                    madres.append(i[0])
+                    suma = 0
+                    x += 1
+                    r = random.uniform(0, sve)
+                    #print 'numero aleatorio = ' + str(r)
+                if x == len(aptitud) and len(madres) < len(aptitud)/2:
+                    #print 'HOLAAAAAAAA'
+                    x = 0
+
+        #print madres
+
+        return padres, madres
+
+
+
 
     def cruza(self, padre, madre):
         """
@@ -272,7 +358,21 @@ class GeneticoPermutaciones2(Genetico):
         #
         # ------ IMPLEMENTA AQUI TU CÓDIGO --------------------------------
         #
-        raise NotImplementedError("¡Este metodo debe ser implementado!")
+
+        #METODO SWITCH CAMBIA A UNA POSICION ADELANTE
+        poblacion_mutada = []
+        for individuo in poblacion:
+            individuo = list(individuo)
+            for i in range(len(individuo)):
+                if random.random() < self.prob_muta:
+                    #print 'hola'
+                    k = random.randint(0, len(individuo) - 1)
+                    if (k == len(individuo) - 1):
+                        individuo[k], individuo[0] = individuo[0], individuo[k]
+                    else:
+                        individuo[k], individuo[k+1] = individuo[k+1], individuo[k]
+            poblacion_mutada.append(tuple(individuo))
+        return poblacion_mutada
 
 
 def prueba_genetico_nreinas(algo_genetico, problema, n_poblacion, n_generaciones):
@@ -301,10 +401,17 @@ if __name__ == "__main__":
     #   -- ¿Que reglas podrías establecer para asignar valores segun tu experiencia
     #
 
+    """"
     solucion = prueba_genetico_nreinas(algo_genetico=GeneticoPermutaciones1(0.05),
+                                       problema=nreinas.ProblemaNreinas(8),
+                                       n_poblacion=1,
+                                       n_generaciones=1)
+    print solucion
+    """
+    solucion = prueba_genetico_nreinas(algo_genetico=GeneticoPermutaciones2(0.05),
                                        problema=nreinas.ProblemaNreinas(16),
-                                       n_poblacion=32,
-                                       n_generaciones=100)
+                                       n_poblacion=4,
+                                       n_generaciones=50)
     print solucion
 
     #################################################################################################
