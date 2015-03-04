@@ -68,7 +68,7 @@ class Genetico:
             if elitismo:
                 poblacion.append(elite)
 
-        e = min(poblacion, key=problema.costo)
+        e = min(poblacion, key = problema.costo)
 
         return e
 
@@ -375,7 +375,7 @@ class GeneticoPermutaciones2(Genetico):
         # Tupla con el individuo,aptitud y valor esperado
         ind = zip(poblacion,aptitud,vei)
 
-        print ind
+        #print ind
 
         padres = []
 
@@ -385,7 +385,7 @@ class GeneticoPermutaciones2(Genetico):
 
         x = 0
 
-        print 'numero aleatorio = ' + str(r)
+        #print 'numero aleatorio = ' + str(r)
 
         while x < len(aptitud) / 2:
 
@@ -395,11 +395,11 @@ class GeneticoPermutaciones2(Genetico):
 
                 suma += temp
 
-                print 'suma = ' + str(suma)
+                #print 'suma = ' + str(suma)
 
                 if suma > r  and len(padres) < len(aptitud)/2:
 
-                    print 'hola'
+                    #print 'hola'
 
                     padres.append(i[0])
 
@@ -409,11 +409,11 @@ class GeneticoPermutaciones2(Genetico):
 
                     x += 1
 
-                    print 'numero aleatorio = ' + str(r)
+                    #print 'numero aleatorio = ' + str(r)
 
-        print 'PADRES'
+        #print 'PADRES'
 
-        print padres
+        #print padres
 
         madres = []
 
@@ -423,7 +423,7 @@ class GeneticoPermutaciones2(Genetico):
 
         x = 0
 
-        print 'numero aleatorio = ' + str(r)
+        #print 'numero aleatorio = ' + str(r)
 
         while x < len(aptitud)/2:
 
@@ -433,11 +433,11 @@ class GeneticoPermutaciones2(Genetico):
 
                 suma += temp
 
-                print 'suma = ' + str(suma)
+                #print 'suma = ' + str(suma)
 
                 if suma > r  and len(madres) < len(aptitud)/2:
 
-                    print 'hola'
+                    #print 'hola'
 
                     madres.append(i[0])
 
@@ -447,11 +447,11 @@ class GeneticoPermutaciones2(Genetico):
 
                     x += 1
 
-                    print 'numero aleatorio = ' + str(r)
+                    #print 'numero aleatorio = ' + str(r)
 
-        print 'MADRES'
+        #print 'MADRES'
 
-        print madres
+        #print madres
 
         return padres, madres
 
@@ -529,9 +529,9 @@ class GeneticoPermutaciones2(Genetico):
 
                 if random.random() < self.prob_muta:
 
-                    #print 'hola'
-
                     k = random.randint(0, len(individuo) - 1)
+
+                    #print individuo
 
                     if (k == len(individuo) - 1):
 
@@ -541,30 +541,31 @@ class GeneticoPermutaciones2(Genetico):
 
                         individuo[k], individuo[k+1] = individuo[k+1], individuo[k]
 
+                    #print individuo
+
             poblacion_mutada.append(tuple(individuo))
 
         return poblacion_mutada
 
-
 def prueba_genetico_nreinas(algo_genetico, problema, n_poblacion, n_generaciones):
 
-    #tiempo_inicial = time.time()
+    tiempo_inicial = time.time()
 
-    solucion = algo_genetico.busqueda(problema, n_poblacion, n_generaciones, elitismo=True)
+    solucion = algo_genetico.busqueda(problema, n_poblacion, n_generaciones, elitismo = True)
 
-    #tiempo_final = time.time()
+    tiempo_final = time.time()
 
-    #print "\nUtilizando el algoritmo genético " + algo_genetico.nombre
+    print "\nUtilizando el algoritmo genético " + algo_genetico.nombre
 
-    #print "Con poblacion de dimensión ", n_poblacion
+    print "Con poblacion de dimensión ", n_poblacion
 
-    #print "Con ", str(n_generaciones), " generaciones"
+    print "Con ", str(n_generaciones), " generaciones"
 
-    #print "Costo de la solución encontrada: ", problema.costo(solucion)
+    print "Costo de la solución encontrada: ", problema.costo(solucion)
 
-    #print "Tiempo de ejecución en segundos: ", tiempo_final - tiempo_inicial
+    print "Tiempo de ejecución en segundos: ", tiempo_final - tiempo_inicial
 
-    return solucion
+    return solucion, problema.costo(solucion)
 
 
 if __name__ == "__main__":
@@ -581,15 +582,16 @@ if __name__ == "__main__":
     #   -- ¿Que reglas podrías establecer para asignar valores segun tu experiencia
     #
 
-    """"
+    #""""
 
     solucion = prueba_genetico_nreinas(algo_genetico = GeneticoPermutaciones2(0.05),
                                        problema = nreinas.ProblemaNreinas(8),
                                        n_poblacion = 1,
                                        n_generaciones = 1)
-    print solucion
 
-    """
+    print solucion[1]
+
+    #"""
 
     #################################################################################################
     #                          20 PUNTOS
@@ -605,8 +607,14 @@ if __name__ == "__main__":
     #
     # Recuerda de quitar los comentarios de las lineas siguientes:
 
+    """"
+
     solucion = prueba_genetico_nreinas(algo_genetico = GeneticoPermutaciones2(0.05),
                                        problema = nreinas.ProblemaNreinas(8),
                                        n_poblacion = 4,
                                        n_generaciones = 1)
+
     print solucion
+
+    """
+    
