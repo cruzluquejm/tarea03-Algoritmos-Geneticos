@@ -555,17 +555,17 @@ def prueba_genetico_nreinas(algo_genetico, problema, n_poblacion, n_generaciones
 
     tiempo_final = time.time()
 
-    print "\nUtilizando el algoritmo genético " + algo_genetico.nombre
+    #print "\nUtilizando el algoritmo genético " + algo_genetico.nombre
 
-    print "Con poblacion de dimensión ", n_poblacion
+    #print "Con poblacion de dimensión ", n_poblacion
 
-    print "Con ", str(n_generaciones), " generaciones"
+    #print "Con ", str(n_generaciones), " generaciones"
 
-    print "Costo de la solución encontrada: ", problema.costo(solucion)
+    #print "Costo de la solución encontrada: ", problema.costo(solucion)
 
-    print "Tiempo de ejecución en segundos: ", tiempo_final - tiempo_inicial
+    #print "Tiempo de ejecución en segundos: ", tiempo_final - tiempo_inicial
 
-    return solucion, problema.costo(solucion)
+    return solucion, problema.costo(solucion),tiempo_final - tiempo_inicial
 
 
 if __name__ == "__main__":
@@ -578,18 +578,129 @@ if __name__ == "__main__":
     # posible en promedio. Realiza esto para las 8, 16 y 32 reinas.
     #   -- ¿Cuales son en cada caso los mejores valores (escribelos abajo de esta lines)
     #
+    #       * 8 reinas *
+    #
+    #       - probabilidad de mutacion 0.001 - Poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 0.83
+    #       Tiempo promedio = 0.0255250382423
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((5, 2, 0, 6, 4, 7, 1, 3), 0, 0.03673601150512695)
+    #
+    #       - probabilidad de mutacion 0.01 - poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 0.71
+    #       Tiempo promedio = 0.026699860096
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((2, 5, 7, 0, 3, 6, 4, 1), 0, 0.02698683738708496)
+    #
+    #       - probabilidad de mutacion 0.05 - Poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 0.68
+    #       Tiempo promedio = 0.0260408782959
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((4, 0, 7, 3, 1, 6, 2, 5), 0, 0.02791881561279297)
+    #
+    #       * 16 reinas *
+    #
+    #       - probabilidad de mutacion 0.001 - Poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 3.51
+    #       Tiempo promedio = 0.0780597019196
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((14, 10, 2, 15, 3, 8, 13, 5, 1, 11, 6, 12, 0, 4, 7, 9), 2, 0.07854199409484863)
+    #
+    #       - probabilidad de mutacion 0.01 - poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 3.61
+    #       Tiempo promedio = 0.077344493866
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((4, 12, 3, 5, 14, 11, 6, 10, 0, 2, 15, 8, 1, 7, 9, 13), 2, 0.0832369327545166)
+    #
+    #       - probabilidad de mutacion 0.05 - Poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 3.29
+    #       Tiempo promedio = 0.0794121146202
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((0, 8, 13, 3, 6, 9, 14, 1, 4, 10, 15, 2, 11, 5, 7, 12), 1, 0.07831597328186035)
+    #
+    #       * 32 reinas *
+    #
+    #       - probabilidad de mutacion 0.001 - Poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 10.11
+    #       Tiempo promedio = 0.282851781845
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((22, 5, 26, 9, 20, 12, 23, 18, 19, 17, 0, 24, 31, 4, 6, 1, 3, 29, 14, 21, 16, 27, 11, 28, 7, 25, 13, 15, 10, 30, 2, 8), 7, 0.28515195846557617)
+    #
+    #       - probabilidad de mutacion 0.01 - poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 10.11
+    #       Tiempo promedio = 0.28307256937
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((15, 20, 29, 27, 30, 21, 2, 18, 1, 24, 16, 3, 8, 25, 9, 14, 0, 31, 28, 5, 7, 19, 13, 4, 23, 22, 26, 17, 11, 6, 12, 10), 7, 0.287092924118042)
+    #
+    #       - probabilidad de mutacion 0.05 - Poblacion 50 - generaciones 10 -
+    #
+    #       Aptitud promedio = 9.91
+    #       Tiempo promedio = 0.283889763355
+    #       Caracteristicas del super individuo mostrado abajo = Cromosoma + aptitud + tiempo
+    #       Super Individuo = ((9, 13, 22, 20, 11, 28, 6, 10, 12, 30, 3, 0, 14, 24, 2, 25, 7, 1, 31, 15, 16, 4, 8, 5, 21, 19, 29, 17, 18, 27, 23, 26), 6, 0.2855989933013916)
     #
     #   -- ¿Que reglas podrías establecer para asignar valores segun tu experiencia
     #
+    #       * 8 reinas *
+    #
+    #       En el caso de las 8 reinas la siguiente configuracion tuvo buena aptitud y promedio a comparacion de las otras
+    #       a mi criterio claro entonces para el caso de las 8 reinas opto por esta configuracion.
+    #        - probabilidad de mutacion 0.05 - Poblacion 50 - generaciones 10 -
+    #
+    #       * 16 reinas *
+    #
+    #       En el caso de las 16 reinas la siguiente configuracion tuvo buena aptitud y promedio a comparacion de las otras
+    #       a mi criterio claro entonces para el caso de las 8 reinas opto por esta configuracion.
+    #        - probabilidad de mutacion 0.05 - Poblacion 50 - generaciones 10 -
+    #
+    #       * 32 reinas *
+    #
+    #       En el caso de las 32 reinas la siguiente configuracion tuvo buena aptitud y promedio a comparacion de las otras
+    #       a mi criterio claro entonces para el caso de las 8 reinas opto por esta configuracion.
+    #        - probabilidad de mutacion 0.05 - Poblacion 50 - generaciones 10 -
+    #
+    #       Para realizar estas conclusiones me enfoque principalmente en la aptitud promedio ya que pienso que el tiempo
+    #       aqui es insignificante. Me he llevado la sorpresa que la mejor configuracion a mi parecer ha sido la siguiente
+    #       - probabilidad de mutacion 0.05 - Poblacion 50 - generaciones 10 -
 
     #""""
 
-    solucion = prueba_genetico_nreinas(algo_genetico = GeneticoPermutaciones2(0.05),
-                                       problema = nreinas.ProblemaNreinas(8),
-                                       n_poblacion = 1,
-                                       n_generaciones = 1)
+    ma = 0
+    mt = 0
+    it = 100
+    for x in xrange(1,it):
+        solucion = prueba_genetico_nreinas(algo_genetico = GeneticoPermutaciones2(0.05),
+        problema = nreinas.ProblemaNreinas(32),
+        n_poblacion = 50,
+        n_generaciones = 100)
+        temp1 = float(solucion[1])
+        temp2 = float(solucion[2])
+        ma += temp1
+        mt += temp2
 
-    print solucion[1]
+        if x == 1:
+            si = solucion
+        if solucion[1] < si[1]:
+            si = solucion
+
+
+
+
+    print 'Aptitud promedio'
+    print ma/it
+    print 'Tiempo promedio'
+    print mt/it
+    print 'Super Individuo'
+    print si
+
 
     #"""
 
@@ -603,7 +714,7 @@ if __name__ == "__main__":
     #
     #
     #   -- ¿Que reglas podrías establecer para asignar valores segun tu experiencia? Escribelo aqui
-    #   abajo, utilizando tnto espacio como consideres necesario.
+    #   abajo, utilizando tanto espacio como consideres necesario.
     #
     # Recuerda de quitar los comentarios de las lineas siguientes:
 
@@ -617,4 +728,3 @@ if __name__ == "__main__":
     print solucion
 
     """
-    
