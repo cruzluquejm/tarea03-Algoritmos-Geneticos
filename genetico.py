@@ -325,10 +325,11 @@ class GeneticoPermutaciones2(Genetico):
     # ------ IMPLEMENTA AQUI TU CÓDIGO --------------------------------
     #
 
+    # Ten cuidado, la aptitud es invesa al costo!!!
     def calcula_aptitud(self, individuo, costo=None):
 
-        #return 1.0 / (1.0 + costo(individuo))
-        return costo(individuo)
+        return 1.0 / (1.0 + costo(individuo))
+        # return costo(individuo)
 
     """
 
